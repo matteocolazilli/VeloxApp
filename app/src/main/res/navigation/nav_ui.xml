@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_ui">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_ui"
+    app:startDestination="@id/navList">
 
+    <fragment
+        android:id="@+id/navList"
+        android:name="it.univaq.veloxapp.fragments.ListFragment"
+        android:label="ListFragment"
+        tools:layout="@layout/fragment_list"/>
+    <fragment
+        android:id="@+id/navMap"
+        android:name="it.univaq.veloxapp.fragments.MapFragment"
+        android:label="MapFragment"
+        tools:layout="@layout/fragment_map"/>
 </navigation>

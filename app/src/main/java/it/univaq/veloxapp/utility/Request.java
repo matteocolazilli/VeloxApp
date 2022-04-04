@@ -5,7 +5,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 //Classe per richieste http
-public class Requests {
+public class Request {
 
     //funzione pubblica: richieste internet in modo asincrono->serve un thread
     public static void asyncRequest(OnRequestListener listener){  //non ritorna nulla perchè dobbiamo aspettare la fine dell'azione dello scaricamento dei dati ->callback onRequest
@@ -32,7 +32,7 @@ public class Requests {
                 InputStream in = connection.getInputStream();
                 int length = Integer.parseInt(connection.getHeaderField("Content-Length"));
 
-
+                ///TODO: scegliere la tipologia di buffer da utilizzare
                 byte[] data = new byte[length]; // dati scaricati
                 byte[] buffer = new byte[1024]; // buffer temporaneo per elaborare i dati un po' alla volta
                 int read, counter = 0;
