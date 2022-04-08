@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VeloxApp</string>
+    <string name="list">Lista</string>
+    <string name="maps">Mappe</string>
+    <string name="disabled_position_toast">Abilita la posizione per trovare gli autovelox vicini a te</string>
+    <string name="my_location">La mia poszione</string>
+</resources>

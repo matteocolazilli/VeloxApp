@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">VeloxApp</string>
+    <string name="app_name" translatable="false">VeloxApp</string>
     <string name="list">List</string>
     <string name="maps">Maps</string>
+    <string name="disabled_position_toast">"Enable location to find autovelox close to you"</string>
+    <string name="my_location">"My Location"</string>
 </resources>

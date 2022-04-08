@@ -9,10 +9,22 @@
         android:id="@+id/navList"
         android:name="it.univaq.veloxapp.fragments.ListFragment"
         android:label="ListFragment"
-        tools:layout="@layout/fragment_list"/>
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_navList_to_detailActivity"
+            app:destination="@id/detailActivity" />
+    </fragment>
     <fragment
         android:id="@+id/navMap"
         android:name="it.univaq.veloxapp.fragments.MapFragment"
         android:label="MapFragment"
-        tools:layout="@layout/fragment_map"/>
+        tools:layout="@layout/fragment_map">
+        <action
+            android:id="@+id/action_navMap_to_detailActivity"
+            app:destination="@id/detailActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/detailActivity"
+        android:name="it.univaq.veloxapp.DetailActivity"
+        android:label="DetailActivity" />
 </navigation>
