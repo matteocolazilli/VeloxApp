@@ -63,7 +63,7 @@ public class ListFragment extends Fragment {
         Request.asyncRequest(new OnRequestListener() {
             @Override
 
-            public void onRequestCompleted(byte[] data) {
+            public void onRequestCompleted(String data) {
 
                 List<Autovelox> autoveloxList = new ArrayList<>() ;
                 if (data == null) return;

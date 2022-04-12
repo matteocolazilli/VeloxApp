@@ -1,6 +1,8 @@
 package it.univaq.veloxapp.utility;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -12,7 +14,7 @@ public class Request {
 
         new Thread(() -> {
 
-            byte[] data = doRequest("GET", "http://www.datiopen.it/export/json/Mappa-degli-autovelox-in-italia.json", listener);
+            String data = doRequest("GET", "http://www.datiopen.it/export/json/Mappa-degli-autovelox-in-italia.json", listener);
             if(listener != null){
                 listener.onRequestCompleted(data);
             }
@@ -20,7 +22,7 @@ public class Request {
     }
 
     //Metodo per realizzare la connessione
-    private static byte[] doRequest(String method, String address, OnRequestListener listener) {
+    private static String doRequest(String method, String address, OnRequestListener listener) {
         HttpURLConnection connection = null; // inizializzata a null per poter essere utilizzata nel finally
         try {
             URL url = new URL(address);
@@ -30,23 +32,14 @@ public class Request {
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 //verifichiamo la dimensione del download contenuta nell'header della risposta HTTP
                 InputStream in = connection.getInputStream();
-                int length = Integer.parseInt(connection.getHeaderField("Content-Length"));
 
-                ///TODO: scegliere la tipologia di buffer da utilizzare
-                byte[] data = new byte[length]; // dati scaricati
-                byte[] buffer = new byte[1024]; // buffer temporaneo per elaborare i dati un po' alla volta
-                int read, counter = 0;
-
-                while ((read = in.read(buffer)) != -1) {
-                    System.arraycopy(buffer, 0, data, counter, read);
-                    counter += read;
-
-                    int percentage = counter * 100 / length;
-                    if (listener != null) {
-                        listener.onRequestUpdate(percentage);
-                    }
+                StringBuilder sb  =new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                String line = "";
+                while((line = reader.readLine()) != null) {
+                    sb.append(line);
                 }
-                return data;
+                return sb.toString();
 
 
             }

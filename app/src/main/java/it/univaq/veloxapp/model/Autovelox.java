@@ -46,9 +46,10 @@ public class Autovelox implements Serializable {
             result.setProvince(autovelox.getString("cprovincia"));
             result.setRegion(autovelox.getString("cregione"));
             result.setInsertionDate(convertToTimestamp(autovelox.getString("cdata_e_ora_inserimento")));
-            result.setLongitude(autovelox.getDouble("clongitutidine"));
+            result.setLongitude(autovelox.getDouble("clongitudine"));
             result.setLatitude(autovelox.getDouble("clatitudine"));
             Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+            //TODO: capire come fare questo
             addresses = geocoder.getFromLocation(result.getLatitude(), result.getLongitude(), 1);
             result.setAddress(addresses.get(0).getAddressLine(0));
 
@@ -62,7 +63,7 @@ public class Autovelox implements Serializable {
 
     private static long convertToTimestamp(String text) {
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault());
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
             Date date = format.parse(text);
             if (date != null) return date.getTime();
         } catch (ParseException e) {
