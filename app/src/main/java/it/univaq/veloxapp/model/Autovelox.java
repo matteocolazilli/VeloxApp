@@ -43,13 +43,13 @@ public class Autovelox implements Serializable {
 
         try {
 
+            result.setMunicipality(autovelox.getString("ccomune"));
             result.setProvince(autovelox.getString("cprovincia"));
             result.setRegion(autovelox.getString("cregione"));
             result.setInsertionDate(convertToTimestamp(autovelox.getString("cdata_e_ora_inserimento").split("T")[0]));
             result.setLongitude(autovelox.getDouble("clongitudine"));
             result.setLatitude(autovelox.getDouble("clatitudine"));
             Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-            //TODO: capire come fare questo
             addresses = geocoder.getFromLocation(result.getLatitude(), result.getLongitude(), 1);
             result.setAddress(addresses.get(0).getAddressLine(0));
 

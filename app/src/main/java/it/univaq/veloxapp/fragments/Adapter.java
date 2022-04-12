@@ -56,7 +56,7 @@ public class Adapter extends  RecyclerView.Adapter<Adapter.ViewHolder>{
         public void onBind(Autovelox autovelox) {
 
             title.setText(autovelox.getAddress());
-            String info = String.format("%s ($s), %s",
+            String info = String.format("%s (%s), %s",
                     autovelox.getMunicipality(),
                     autovelox.getProvince(),
                     autovelox.getRegion());
