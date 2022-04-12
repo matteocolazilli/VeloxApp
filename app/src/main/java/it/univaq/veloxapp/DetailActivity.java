@@ -39,14 +39,14 @@ public class DetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.textMunicipality)).setText(autovelox.getMunicipality());
         ((TextView) findViewById(R.id.textProvince)).setText(autovelox.getProvince());
         ((TextView) findViewById(R.id.textRegion)).setText(autovelox.getRegion());
-        ((TextView) findViewById(R.id.textInsertionData)).setText(convertTimestampToDate(autovelox.getInsertionDate()));
+        ((TextView) findViewById(R.id.textInsertionData)).setText("Data inserimento: ".concat(convertTimestampToDate(autovelox.getInsertionDate())));
     }
 
     private String convertTimestampToDate (long timestamp) {
 
         if (timestamp == -1) return "No date";
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         return format.format(new Date(timestamp));
     }
 }

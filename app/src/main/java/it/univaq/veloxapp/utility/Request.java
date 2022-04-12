@@ -33,7 +33,7 @@ public class Request {
                 //verifichiamo la dimensione del download contenuta nell'header della risposta HTTP
                 InputStream in = connection.getInputStream();
 
-                StringBuilder sb  =new StringBuilder();
+                StringBuilder sb = new StringBuilder();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 String line = "";
                 while((line = reader.readLine()) != null) {
