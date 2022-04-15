@@ -79,17 +79,15 @@ public class Autovelox implements Serializable {
     private String province;
     private String region;
     @ColumnInfo(name = "speed_limit")
-    private String speedLimit; ///TODO: scegliere implementazione
+    private String speedLimit;
     @ColumnInfo(name = "insertion_date")
-    private long insertionDate; //TODO: vedere se lasciare o meno data e orario separati
-    @ColumnInfo(name = "insertion_time")
-    private long insertionTime;
+    private long insertionDate;
     private double longitude;
     private double latitude;
 
 
     public long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(long id) {
@@ -97,7 +95,7 @@ public class Autovelox implements Serializable {
     }
 
     public String getMunicipality() {
-        return municipality;
+        return this.municipality;
     }
 
     public void setMunicipality(String municipality) {
@@ -105,7 +103,7 @@ public class Autovelox implements Serializable {
     }
 
     public String getProvince() {
-        return province;
+        return this.province;
     }
 
     public void setProvince(String province) {
@@ -113,7 +111,7 @@ public class Autovelox implements Serializable {
     }
 
     public String getRegion() {
-        return region;
+        return this.region;
     }
 
     public void setRegion(String region) {
@@ -121,7 +119,7 @@ public class Autovelox implements Serializable {
     }
 
     public String getSpeedLimit() {
-        return speedLimit;
+        return this.speedLimit;
     }
 
     public void setSpeedLimit(String speedLimit) {
@@ -129,7 +127,7 @@ public class Autovelox implements Serializable {
     }
 
     public long getInsertionDate() {
-        return insertionDate;
+        return this.insertionDate;
     }
 
     public void setInsertionDate(long insertionDate) {
@@ -140,20 +138,12 @@ public class Autovelox implements Serializable {
         this.longitude = longitude;
     }
 
-    public long getInsertionTime() {
-        return insertionTime;
-    }
-
-    public void setInsertionTime(long insertionTime) {
-        this.insertionTime = insertionTime;
-    }
-
     public double getLongitude() {
-        return longitude;
+        return this.longitude;
     }
 
     public double getLatitude() {
-        return latitude;
+        return this.latitude;
     }
 
     public void setLatitude(double latitude) {
@@ -161,7 +151,7 @@ public class Autovelox implements Serializable {
     }
 
     public String getAddress() {
-        return address;
+        return this.address;
     }
 
     public void setAddress(String address) {

@@ -4,5 +4,6 @@
     <string name="list">Lista</string>
     <string name="maps">Mappe</string>
     <string name="disabled_position_toast">Abilita la posizione per trovare gli autovelox vicini a te</string>
-    <string name="my_location">La mia poszione</string>
+    <string name="my_location">La mia posizione</string>
+    <string name="insertion_date">Data di inserimento</string>
 </resources>

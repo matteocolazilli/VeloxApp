@@ -39,7 +39,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private GoogleMap map;
     private Marker myMarker;
     private List<Marker> autoveloxMarker = new ArrayList<>();
-
+    private LocationHelper locationHelper;
 
     private ActivityResultLauncher<String> launcher = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(),
@@ -54,7 +54,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                     }
             }});
 
-    private LocationHelper locationHelper;
 
     @Nullable
     @Override
@@ -87,11 +86,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             public boolean onMarkerClick(@NonNull Marker marker) {
 
                 Autovelox autovelox = (Autovelox) marker.getTag();
-                if (autovelox != null){
+                if (autovelox != null) {
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("autovelox", autovelox);
-                    Navigation.findNavController(requireView()).navigate(R.id.action_navMap_to_detailActivity);
+                    Navigation.findNavController(MapFragment.this.requireView()).navigate(R.id.action_navMap_to_detailActivity);
                     return true;
                 }
                 return false;
@@ -157,7 +156,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
         if (myMarker == null){
             MarkerOptions options = new MarkerOptions();
-            options.title("MyLocation"); //TODO: internazionalizzzare
+            options.title(getString(R.string.my_location));
             options.position(new LatLng(location.getLatitude(), location.getLongitude()));
             options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
             myMarker = map.addMarker(options);

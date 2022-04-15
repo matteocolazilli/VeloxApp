@@ -12,8 +12,6 @@ import java.util.Locale;
 
 import it.univaq.veloxapp.model.Autovelox;
 
-//TODO: in detail_activity.xml inserire una immagine di un autovelox per riempire la schermata
-
 public class DetailActivity extends AppCompatActivity {
 
     private Autovelox autovelox;
@@ -39,7 +37,7 @@ public class DetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.textMunicipality)).setText(autovelox.getMunicipality());
         ((TextView) findViewById(R.id.textProvince)).setText(autovelox.getProvince());
         ((TextView) findViewById(R.id.textRegion)).setText(autovelox.getRegion());
-        ((TextView) findViewById(R.id.textInsertionData)).setText("Data inserimento: ".concat(convertTimestampToDate(autovelox.getInsertionDate())));
+        ((TextView) findViewById(R.id.textInsertionData)).setText(getString(R.string.insertion_date).concat(": ").concat(convertTimestampToDate(autovelox.getInsertionDate())));
     }
 
     private String convertTimestampToDate (long timestamp) {
