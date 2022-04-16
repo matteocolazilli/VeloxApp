@@ -5,4 +5,5 @@
     <string name="disabled_position_toast">Enable location to find autovelox close to you</string>
     <string name="my_location">My Location</string>
     <string name="insertion_date">Insertion date</string>
+    <string name="search_hint">Search by municipality</string>
 </resources>
