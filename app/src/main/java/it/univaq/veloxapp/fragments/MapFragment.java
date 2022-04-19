@@ -90,7 +90,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("autovelox", autovelox);
-                    Navigation.findNavController(MapFragment.this.requireView()).navigate(R.id.action_navMap_to_detailActivity);
+                    Navigation.findNavController(MapFragment.this.requireView()).navigate(R.id.action_navMap_to_detailActivity, bundle);
                     return true;
                 }
                 return false;
@@ -126,7 +126,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 l.setLatitude(autovelox.getLatitude());
                 l.setLongitude(autovelox.getLongitude());
 
-                if (l.distanceTo(location) > 10000) continue;
+                if (l.distanceTo(location) > 100000) continue;
 
                 MarkerOptions options = new MarkerOptions();
                 options.title(autovelox.getAddress());
