@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +29,7 @@ public class ListFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Autovelox> data = new ArrayList<>();
     private Adapter adapter = new Adapter(data);
-
+    private SearchView searchView;
 
     @Nullable
     @Override
@@ -40,8 +41,27 @@ public class ListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        searchView = view.findViewById(R.id.search_bar);
+        searchView.setQueryHint(getString(R.string.search_hint));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // filtro la recycler view quando la query viene sottoposta
+                adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                // filtro la recycler view quando il testo nella search_bar cambia
+                adapter.getFilter().filter(query);
+                return false;
+            }
+        });
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setAdapter(adapter);
+
 
         if (Pref.load(requireContext(),"firstStart", true)){
             download();

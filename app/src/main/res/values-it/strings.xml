@@ -6,4 +6,5 @@
     <string name="disabled_position_toast">Abilita la posizione per trovare gli autovelox vicini a te</string>
     <string name="my_location">La mia posizione</string>
     <string name="insertion_date">Data di inserimento</string>
+    <string name="search_hint">Ricerca per comune</string>
 </resources>
