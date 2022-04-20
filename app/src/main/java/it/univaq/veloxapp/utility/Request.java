@@ -38,12 +38,12 @@ public class Request {
                 String line = "";
 
                 int downloadedBytes = 0;
-                int size = 0;
+                int size = connection.getContentLength();
                 int percentage = 0;
 
                 while((line = reader.readLine()) != null) {
                     sb.append(line);
-                    // downloadedBytes = trovare un modo per memorizzare i bytes scaricati
+                    // downloadedBytes =
                     // percentage = (downloadedBytes / size)  * 100;
                     // listener.onRequestUpdate(percentage);
                 }

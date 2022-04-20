@@ -101,7 +101,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-
         load(location);
     }
 
@@ -143,8 +142,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             }
             try {
                 //per visualizzare solo i miei marker e non tutta la mappa
-                requireActivity().runOnUiThread(()->
-                        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(),10)));
+                requireActivity().runOnUiThread(()-> {
+                            //map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 10));
+                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(myMarker.getPosition(),3));
+                            map.animateCamera(CameraUpdateFactory.zoomTo(11), 3000, null);
+                        }
+
+                );
             } catch (Exception e) {
                 e.printStackTrace();
             }
