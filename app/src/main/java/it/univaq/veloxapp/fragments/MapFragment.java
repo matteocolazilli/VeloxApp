@@ -46,7 +46,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             new ActivityResultCallback<Boolean>() {
                 @Override
                 public void onActivityResult(Boolean result) {
-
                     if (result){
                         locationHelper.start(MapFragment.this);
                     } else {
@@ -90,7 +89,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("autovelox", autovelox);
-                    Navigation.findNavController(MapFragment.this.requireView()).navigate(R.id.action_navMap_to_detailActivity, bundle);
+                    Navigation.findNavController(MapFragment.this.requireView()).navigate(R.id.action_navMap_to_detailActivity,bundle);
                     return true;
                 }
                 return false;
@@ -126,7 +125,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 l.setLatitude(autovelox.getLatitude());
                 l.setLongitude(autovelox.getLongitude());
 
-                if (l.distanceTo(location) > 100000) continue;
+                if (l.distanceTo(location) > 10000) continue;
 
                 MarkerOptions options = new MarkerOptions();
                 options.title(autovelox.getAddress());
@@ -144,7 +143,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             }
             try {
                 //per visualizzare solo i miei marker e non tutta la mappa
-                requireActivity().runOnUiThread(()-> map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(),10)));
+                requireActivity().runOnUiThread(()->
+                        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(),10)));
             } catch (Exception e) {
                 e.printStackTrace();
             }
