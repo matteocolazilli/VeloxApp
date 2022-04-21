@@ -36,8 +36,16 @@ public class Request {
                 StringBuilder sb = new StringBuilder();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 String line = "";
+
+                int downloadedBytes = 0;
+                int size = connection.getContentLength();
+                int percentage = 0;
+
                 while((line = reader.readLine()) != null) {
                     sb.append(line);
+                    // downloadedBytes =
+                    // percentage = (downloadedBytes / size)  * 100;
+                    // listener.onRequestUpdate(percentage);
                 }
                 return sb.toString();
 

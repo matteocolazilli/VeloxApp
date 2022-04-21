@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:inputType="textFilter"
         android:padding="4dp"
-        app:queryHint="@string/search_hint"
+        android:queryHint="@string/search_hint"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
