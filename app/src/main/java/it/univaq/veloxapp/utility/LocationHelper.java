@@ -27,8 +27,8 @@ public class LocationHelper {
         int checkFine = ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
 
         if (checkCoarse == PackageManager.PERMISSION_GRANTED && checkFine == PackageManager.PERMISSION_GRANTED){
-            manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5, listener);
-            manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 5, listener);
+            manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 20, listener);
+            manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 20, listener);
         }else{
             launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
         }
