@@ -40,6 +40,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private Marker myMarker;
     private List<Marker> autoveloxMarker = new ArrayList<>();
     private LocationHelper locationHelper;
+    private boolean firstUpdate = true;
+    private Location myLocation = new Location("myposition");
+
+
 
     private ActivityResultLauncher<String> launcher = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(),
@@ -95,14 +99,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 return false;
             }
         });
+
         locationHelper.start(this);
 
     }
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        load(location);
+
+        if (firstUpdate) {
+            load(location);
+        } else {
+            myLocation.setLongitude(myMarker.getPosition().longitude);
+            myLocation.setLatitude(myMarker.getPosition().latitude);
+            boolean distant = location.distanceTo(myLocation) > 100;
+            if (distant){
+                load(location);
+            }
+        }
     }
+
 
     private void load(Location location){
 
@@ -143,11 +159,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             try {
                 //per visualizzare solo i miei marker e non tutta la mappa
                 requireActivity().runOnUiThread(()-> {
-                            //map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 10));
-                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(myMarker.getPosition(),3));
-                            map.animateCamera(CameraUpdateFactory.zoomTo(11), 3000, null);
+                            if (firstUpdate) {
+                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(myMarker.getPosition(), 3));
+                                map.animateCamera(CameraUpdateFactory.zoomTo(11), 2000, null);
+                                firstUpdate = false;
+                            } else {
+                                map.animateCamera(CameraUpdateFactory.newLatLng(myMarker.getPosition()));
+                            }
                         }
-
                 );
             } catch (Exception e) {
                 e.printStackTrace();
