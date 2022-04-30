@@ -77,7 +77,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
         Marker marker = map.addMarker(markerOptions);
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(),11 ));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(),15 ));
 
     }
 }
