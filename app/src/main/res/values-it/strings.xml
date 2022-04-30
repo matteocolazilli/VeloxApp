@@ -3,8 +3,10 @@
     <string name="app_name">VeloxApp</string>
     <string name="list">Lista</string>
     <string name="maps">Mappe</string>
-    <string name="disabled_position_toast">Abilita la posizione per trovare gli autovelox vicini a te</string>
+    <string name="disabled_position_toast">Abilita la posizione per trovare gli autovelox vicino a te</string>
     <string name="my_location">La mia posizione</string>
     <string name="insertion_date">Data di inserimento</string>
     <string name="search_hint">Ricerca per comune</string>
+    <string name="position_permissions_not_granted">Autorizzaci ad usare la tua posizione per trovare gli autovelox vicino a te</string>
+    <string name="no_gps_alert_message">Il GPS sembra essere disabilitato, vuoi abilitarlo?</string>
 </resources>
