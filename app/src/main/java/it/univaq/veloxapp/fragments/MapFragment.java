@@ -139,9 +139,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
          // aggiornamento dei nuovi marker al cambiamento di posizione
         new Thread(()->{
 
-            //per centrare la mappa sugli autovelox intorno alla mia posizione
-            LatLngBounds.Builder bounds = new LatLngBounds.Builder();
-
             List<Autovelox> autoveloxList = DB.getInstance(requireContext()).autoveloxDao().findAll();
 
             for (Autovelox autovelox : autoveloxList){
@@ -155,7 +152,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 options.title(autovelox.getAddress());
                 options.position(new LatLng(l.getLatitude(), l.getLongitude()));
                 options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-                bounds.include(new LatLng(l.getLatitude(), l.getLongitude()));
 
                 //aggiunta degli autovelox nel main thread
                 requireActivity().runOnUiThread(() ->{
