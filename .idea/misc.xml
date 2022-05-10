@@ -6,11 +6,12 @@
         <entry key="..\:/Users/matte/.gradle/caches/transforms-3/d51ac3cb0ccd0064296bd9eb739b32ae/transformed/appcompat-1.4.1/res/drawable/abc_cab_background_internal_bg.xml" value="0.1" />
         <entry key="..\:/Users/matte/AndroidStudioProjects/VeloxApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2555" />
         <entry key="..\:/Users/matte/AndroidStudioProjects/VeloxApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2555" />
-        <entry key="..\:/Users/matte/AndroidStudioProjects/VeloxApp/app/src/main/res/layout/activity_detail.xml" value="0.25" />
+        <entry key="..\:/Users/matte/AndroidStudioProjects/VeloxApp/app/src/main/res/layout/activity_detail.xml" value="0.1" />
         <entry key="..\:/Users/matte/AndroidStudioProjects/VeloxApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/matte/AndroidStudioProjects/VeloxApp/app/src/main/res/layout/adapter_autovelox.xml" value="0.25" />
         <entry key="..\:/Users/matte/AndroidStudioProjects/VeloxApp/app/src/main/res/layout/fragment_list.xml" value="0.1" />
         <entry key="..\:/Users/matte/AndroidStudioProjects/VeloxApp/app/src/main/res/layout/fragment_map.xml" value="0.25" />
+        <entry key="..\:/Users/matte/AndroidStudioProjects/VeloxApp/app/src/main/res/layout/map_detail_fragment.xml" value="0.26197916666666665" />
         <entry key="..\:/Users/matte/AndroidStudioProjects/VeloxApp/app/src/main/res/menu/bottom_menu.xml" value="0.25" />
         <entry key="..\:/Users/matte/AndroidStudioProjects/VeloxApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
         <entry key="..\:/Users/matte/AndroidStudioProjects/VeloxApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_2.xml" value="0.167" />

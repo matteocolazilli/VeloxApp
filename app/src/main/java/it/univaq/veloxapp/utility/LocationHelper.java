@@ -5,20 +5,19 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationListener;
 import android.location.LocationManager;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.core.app.ActivityCompat;
 
 public class LocationHelper {
 
-    private Context context;
-    private LocationManager manager;
-    private ActivityResultLauncher<String> launcher;
+    private final Context context;
+    private final LocationManager locationManager;
+    private final ActivityResultLauncher<String> locationPermissionLauncher;
 
-    public LocationHelper(Context context, ActivityResultLauncher<String> launcher) {
+    public LocationHelper(Context context, ActivityResultLauncher<String> locationPermissionLauncher) {
         this.context = context;
-        manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        this.launcher = launcher;
+        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        this.locationPermissionLauncher = locationPermissionLauncher;
     }
 
     public void start(LocationListener listener) {
@@ -26,19 +25,23 @@ public class LocationHelper {
         int checkCoarse = ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION);
         int checkFine = ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
 
-        if (checkCoarse == PackageManager.PERMISSION_GRANTED && checkFine == PackageManager.PERMISSION_GRANTED){
-            manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 20, listener);
-            manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 20, listener);
-        }else{
-            launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
+        if (checkCoarse == PackageManager.PERMISSION_GRANTED && checkFine == PackageManager.PERMISSION_GRANTED) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
+        }else locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
+
+    }
 
 
+
+    public LocationManager getLocationManager() {
+        return locationManager;
     }
 
     public void stop(LocationListener listener){
 
-        manager.removeUpdates(listener);
+        locationManager.removeUpdates(listener);
 
     }
+
 }

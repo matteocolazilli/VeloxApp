@@ -82,7 +82,6 @@ public class ListFragment extends Fragment {
     private void download(){
         Request.asyncRequest(new OnRequestListener() {
 
-            private DialogProgress dialog;
 
             @Override
             public void onRequestCompleted(String data) {
@@ -103,7 +102,6 @@ public class ListFragment extends Fragment {
 
                 ListFragment.this.data.addAll(autoveloxList);
                 recyclerView.post(()-> {
-                    if (dialog != null) dialog.dismiss(); //per togliere la finestra di dialogo dopo il caricamento dei dati
                         adapter.notifyDataSetChanged(); // per eseguire la notifica dell'aggiornamento dati sul thread principale
                 });
 
@@ -115,12 +113,6 @@ public class ListFragment extends Fragment {
 
             @Override
             public void onRequestUpdate(int progress) {
-
-                if (dialog == null) {
-                    dialog = new DialogProgress();
-                    dialog.show(getChildFragmentManager(), "dialog-progress");
-                }
-                dialog.updateProgress(progress);
 
             }
         });

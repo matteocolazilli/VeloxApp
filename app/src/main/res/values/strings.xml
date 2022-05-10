@@ -2,8 +2,10 @@
     <string name="app_name" translatable="false">VeloxApp</string>
     <string name="list">List</string>
     <string name="maps">Maps</string>
-    <string name="disabled_position_toast">Enable location to find autovelox close to you</string>
+    <string name="disabled_position_toast">Enable location to find speed cameras close to you</string>
     <string name="my_location">My Location</string>
     <string name="insertion_date">Insertion date</string>
     <string name="search_hint">Search by municipality</string>
+    <string name="position_permissions_not_granted">Authorize us to use your location to find speed cameras near you</string>
+    <string name="no_gps_alert_message">Your GPS seems to be disabled, do you want to enable it?</string>
 </resources>
