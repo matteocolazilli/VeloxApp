@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.app.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
@@ -80,6 +82,10 @@ public class ListFragment extends Fragment {
     }
 
     private void download(){
+
+        DialogProgress Dialog = new DialogProgress(getContext(), getActivity());
+        Dialog.showDialog();
+
         Request.asyncRequest(new OnRequestListener() {
 
 
@@ -102,7 +108,10 @@ public class ListFragment extends Fragment {
 
                 ListFragment.this.data.addAll(autoveloxList);
                 recyclerView.post(()-> {
-                        adapter.notifyDataSetChanged(); // per eseguire la notifica dell'aggiornamento dati sul thread principale
+                    if (Dialog != null){
+                        Dialog.dismissBar(); //per togliere la finestra di dialogo dopo il caricamento dei dati
+                    }
+                    adapter.notifyDataSetChanged(); // per eseguire la notifica dell'aggiornamento dati sul thread principale
                 });
 
 
