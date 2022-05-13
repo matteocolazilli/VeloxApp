@@ -77,8 +77,6 @@ public class Autovelox implements Serializable {
     private String municipality;
     private String province;
     private String region;
-    @ColumnInfo(name = "speed_limit")
-    private String speedLimit;
     @ColumnInfo(name = "insertion_date")
     private long insertionDate;
     private double longitude;
@@ -115,14 +113,6 @@ public class Autovelox implements Serializable {
 
     public void setRegion(String region) {
         this.region = region;
-    }
-
-    public String getSpeedLimit() {
-        return this.speedLimit;
-    }
-
-    public void setSpeedLimit(String speedLimit) {
-        this.speedLimit = speedLimit;
     }
 
     public long getInsertionDate() {

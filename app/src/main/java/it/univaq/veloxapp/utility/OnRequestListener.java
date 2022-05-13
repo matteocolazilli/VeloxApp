@@ -4,7 +4,4 @@ public interface OnRequestListener { //callback implementata all'interno thread 
 
     //metodo per i dati completi
     void onRequestCompleted(String data);
-
-    //metodo feedback per download se file troppo grande
-    void onRequestUpdate(int progress);
 }

@@ -120,10 +120,6 @@ public class ListFragment extends Fragment {
                 Pref.save(requireContext(), "firstStart", false);
             }
 
-            @Override
-            public void onRequestUpdate(int progress) {
-
-            }
         });
     }
 

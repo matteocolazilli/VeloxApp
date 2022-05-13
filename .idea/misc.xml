@@ -18,7 +18,7 @@
         <entry key="..\:/Users/noemi/AndroidStudioProjects/VeloxApp/app/src/main/res/drawable/ic_baseline_map_24.xml" value="0.1285" />
         <entry key="..\:/Users/noemi/AndroidStudioProjects/VeloxApp/app/src/main/res/layout/activity_detail.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/noemi/AndroidStudioProjects/VeloxApp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/noemi/AndroidStudioProjects/VeloxApp/app/src/main/res/layout/adapter_autovelox.xml" value="0.1" />
+        <entry key="..\:/Users/noemi/AndroidStudioProjects/VeloxApp/app/src/main/res/layout/adapter_autovelox.xml" value="0.22" />
         <entry key="..\:/Users/noemi/AndroidStudioProjects/VeloxApp/app/src/main/res/layout/dialog_progress.xml" value="0.25" />
         <entry key="..\:/Users/noemi/AndroidStudioProjects/VeloxApp/app/src/main/res/layout/fragment_list.xml" value="0.1359375" />
         <entry key="..\:/Users/noemi/AndroidStudioProjects/VeloxApp/app/src/main/res/layout/fragment_map.xml" value="0.20416666666666666" />
@@ -27,7 +27,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
