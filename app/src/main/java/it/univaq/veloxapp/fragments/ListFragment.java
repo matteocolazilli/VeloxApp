@@ -1,16 +1,15 @@
 package it.univaq.veloxapp.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.app.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
@@ -74,6 +73,7 @@ public class ListFragment extends Fragment {
     }
 
     //per recuperare i dati negli avvii successivi al primo download
+    @SuppressLint("NotifyDataSetChanged")
     private void load(){
         new Thread(()->{
             data.addAll(DB.getInstance(requireContext()).autoveloxDao().findAll());
@@ -89,6 +89,7 @@ public class ListFragment extends Fragment {
         Request.asyncRequest(new OnRequestListener() {
 
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onRequestCompleted(String data) {
 

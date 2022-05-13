@@ -17,7 +17,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -40,7 +40,6 @@ import it.univaq.veloxapp.utility.LocationHelper;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, LocationListener {
 
-    private AlertDialog alertDialog;
     private GoogleMap map;
     private Marker myMarker;
     private List<Marker> autoveloxMarker = new ArrayList<>();
@@ -53,13 +52,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             new ActivityResultCallback<Boolean>() {
                 @Override
                 public void onActivityResult(Boolean result) {
-                    if (result){
+                    if (result) {
                         locationHelper.start(MapFragment.this);
                     } else {
-                        Toast.makeText(requireContext(),R.string.position_permissions_not_granted, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), R.string.position_permissions_not_granted, Toast.LENGTH_SHORT).show();
                         requireActivity().onBackPressed();
                     }
-            }});
+                }
+            });
 
     @Nullable
     @Override
@@ -71,7 +71,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        buildAlertMessageNoGps();
         locationHelper = new LocationHelper(requireContext(), locationPermissionLauncher);
 
         SupportMapFragment fragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.fragmentMap);
@@ -82,7 +81,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @Override
     public void onResume() {
         super.onResume();
-        if(alertDialog.isShowing()) alertDialog.dismiss();
+
+        DialogFragment noGpsFragment = (DialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag(NoGpsFragment.TAG);
+
+        if (noGpsFragment != null && noGpsFragment.isVisible())
+            noGpsFragment.dismiss();
+
         checkGPSEnabled();
         locationHelper.start(this);
     }
@@ -104,29 +108,34 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("autovelox", autovelox);
-                Navigation.findNavController(MapFragment.this.requireView()).navigate(R.id.action_navMap_to_detailActivity,bundle);
+                Navigation.findNavController(MapFragment.this.requireView()).navigate(R.id.action_navMap_to_detailActivity, bundle);
                 return true;
             }
             return false;
         });
-        locationHelper.start(this);
     }
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
 
-        if (firstUpdate) {
+        if (location.getProvider().equals(LocationManager.NETWORK_PROVIDER) && firstUpdate) {
             load(location);
-        } else {
+        } else if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
             myLocation.setLongitude(myMarker.getPosition().longitude);
             myLocation.setLatitude(myMarker.getPosition().latitude);
-            boolean distant = location.distanceTo(myLocation) > 100;
-            if (distant){
+            boolean isDistantEnough = location.distanceTo(myLocation) > 10;
+            if (isDistantEnough) {
                 load(location);
             }
         }
     }
 
+
+    @Override
+    public void onProviderDisabled(@NonNull String provider) {
+        LocationListener.super.onProviderDisabled(provider);
+        checkGPSEnabled();
+    }
 
     private void load(Location location){
 
@@ -164,8 +173,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 //per visualizzare solo i miei marker e non tutta la mappa
                 requireActivity().runOnUiThread(()-> {
                             if (firstUpdate) {
-                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(myMarker.getPosition(), 3));
-                                map.animateCamera(CameraUpdateFactory.zoomTo(11), 3000, null);
+                                map.animateCamera(CameraUpdateFactory.newLatLngZoom(myMarker.getPosition(), 11));
+                                //map.animateCamera(CameraUpdateFactory.zoomTo(11), 3000, null);
                                 firstUpdate = false;
                             } else {
                                 map.animateCamera(CameraUpdateFactory.newLatLng(myMarker.getPosition()));
@@ -193,28 +202,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     }
 
     public void checkGPSEnabled() {
-        if (!locationHelper.getLocationManager().isProviderEnabled(LocationManager.GPS_PROVIDER))
-            alertDialog.show();
+
+        DialogFragment noGpsFragment = (DialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag(NoGpsFragment.TAG);
+        boolean isGpsEnabled = locationHelper.getLocationManager().isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if (!isGpsEnabled && noGpsFragment == null)
+            new NoGpsFragment().show(getChildFragmentManager(),NoGpsFragment.TAG);
+        else if (!isGpsEnabled && !noGpsFragment.isVisible())
+            noGpsFragment.show(getChildFragmentManager(),NoGpsFragment.TAG);
     }
 
-    private void buildAlertMessageNoGps() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setMessage(R.string.no_gps_alert_message)
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        requireContext().startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        dialog.dismiss();
-                        requireActivity().onBackPressed();
-                        Toast.makeText(requireContext(), R.string.disabled_position_toast, Toast.LENGTH_SHORT).show();
-                    }
-                });
-        alertDialog = builder.create();
-    }
 
 }
 

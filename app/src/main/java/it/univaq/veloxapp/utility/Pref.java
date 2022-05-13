@@ -9,7 +9,6 @@ public class Pref {
 
         SharedPreferences preferences = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         preferences.edit().putBoolean(key, value).apply();
-
     }
 
     public static boolean load (Context context, String key, boolean defValue){
