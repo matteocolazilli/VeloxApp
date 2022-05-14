@@ -19,7 +19,7 @@ public class NoGpsFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
-        return new  AlertDialog.Builder(requireActivity()).setMessage(R.string.no_gps_alert_message)
+        Dialog dialog =  new  AlertDialog.Builder(requireActivity()).setMessage(R.string.no_gps_alert_message)
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
@@ -28,10 +28,11 @@ public class NoGpsFragment extends DialogFragment {
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        dismiss();
                         requireActivity().onBackPressed();
                         Toast.makeText(requireContext(), R.string.disabled_position_toast, Toast.LENGTH_SHORT).show();
                     }
                 }).create();
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
     }
 }

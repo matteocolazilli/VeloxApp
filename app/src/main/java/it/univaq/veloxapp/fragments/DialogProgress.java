@@ -19,23 +19,23 @@ import it.univaq.veloxapp.R;
 
 public class DialogProgress extends DialogFragment {
 
-    private AlertDialog dialog;
-    private Activity activity;
+    private final AlertDialog dialog;
 
 
     public DialogProgress(Context context, Activity activity) {
-        this.activity = activity;
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater inflater = this.activity.getLayoutInflater();
+        LayoutInflater inflater = activity.getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.dialog_progress, null));
         this.dialog = builder.create();
+        this.dialog.setCancelable(false);
+        this.dialog.setCanceledOnTouchOutside(false);
     }
 
     public void showDialog(){
         dialog.show();
     }
 
-    void dismissBar(){
+    public void dismissBar(){
         dialog.dismiss();
     }
 }

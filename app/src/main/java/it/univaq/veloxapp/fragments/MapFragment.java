@@ -1,8 +1,6 @@
 package it.univaq.veloxapp.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -19,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -81,14 +80,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @Override
     public void onResume() {
         super.onResume();
+        FragmentManager fragmentManager = getChildFragmentManager();
+        NoGpsFragment noGpsFragment = (NoGpsFragment) fragmentManager.findFragmentByTag(NoGpsFragment.TAG);
 
-        DialogFragment noGpsFragment = (DialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag(NoGpsFragment.TAG);
-
-        if (noGpsFragment != null && noGpsFragment.isVisible())
-            noGpsFragment.dismiss();
-
-        checkGPSEnabled();
+        if (noGpsFragment != null)
+            fragmentManager.beginTransaction().remove(noGpsFragment).commit();
         locationHelper.start(this);
+        checkGPSEnabled();
+
     }
 
     @Override
@@ -120,7 +119,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
         if (location.getProvider().equals(LocationManager.NETWORK_PROVIDER) && firstUpdate) {
             load(location);
-        } else if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
+        } else if (location.getProvider().equals(LocationManager.GPS_PROVIDER) && myMarker != null) {
             myLocation.setLongitude(myMarker.getPosition().longitude);
             myLocation.setLatitude(myMarker.getPosition().latitude);
             boolean isDistantEnough = location.distanceTo(myLocation) > 10;
@@ -134,22 +133,37 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @Override
     public void onProviderDisabled(@NonNull String provider) {
         LocationListener.super.onProviderDisabled(provider);
-        checkGPSEnabled();
+        FragmentManager fragmentManager = getChildFragmentManager();
+        NoGpsFragment noGpsFragment = (NoGpsFragment) fragmentManager.findFragmentByTag(NoGpsFragment.TAG);
+
+        if (provider.equals(LocationManager.GPS_PROVIDER) && noGpsFragment == null) checkGPSEnabled();
     }
 
-    private void load(Location location){
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+        LocationListener.super.onProviderEnabled(provider);
+        FragmentManager fragmentManager = getChildFragmentManager();
+        NoGpsFragment noGpsFragment = (NoGpsFragment) fragmentManager.findFragmentByTag(NoGpsFragment.TAG);
+
+        if (noGpsFragment != null)
+            fragmentManager.beginTransaction().remove(noGpsFragment).commit();
+
+        locationHelper.start(this);
+    }
+
+    private void load(Location location) {
 
         addMyMarker(location);
 
         //pulizia dei marker già presenti
         for (Marker marker : autoveloxMarker) marker.remove();
 
-         // aggiornamento dei nuovi marker al cambiamento di posizione
-        new Thread(()->{
+        // aggiornamento dei nuovi marker al cambiamento di posizione
+        new Thread(() -> {
 
             List<Autovelox> autoveloxList = DB.getInstance(requireContext()).autoveloxDao().findAll();
 
-            for (Autovelox autovelox : autoveloxList){
+            for (Autovelox autovelox : autoveloxList) {
                 Location l = new Location("autovelox");
                 l.setLatitude(autovelox.getLatitude());
                 l.setLongitude(autovelox.getLongitude());
@@ -162,7 +176,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
 
                 //aggiunta degli autovelox nel main thread
-                requireActivity().runOnUiThread(() ->{
+                requireActivity().runOnUiThread(() -> {
                     Marker marker = map.addMarker(options);
                     marker.setTag(autovelox); //per avere oggetto clickable
                     autoveloxMarker.add(marker);
@@ -171,7 +185,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             }
             try {
                 //per visualizzare solo i miei marker e non tutta la mappa
-                requireActivity().runOnUiThread(()-> {
+                requireActivity().runOnUiThread(() -> {
                             if (firstUpdate) {
                                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(myMarker.getPosition(), 11));
                                 //map.animateCamera(CameraUpdateFactory.zoomTo(11), 3000, null);
@@ -188,30 +202,27 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         }).start();
     }
 
-    private void addMyMarker(Location location){
+    private void addMyMarker(Location location) {
 
-        if (myMarker == null){
+        if (myMarker == null) {
             MarkerOptions options = new MarkerOptions();
             options.title(getString(R.string.my_location));
             options.position(new LatLng(location.getLatitude(), location.getLongitude()));
             options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
             myMarker = map.addMarker(options);
         } else {
-            myMarker.setPosition(new LatLng(location.getLatitude(),location.getLongitude()));
+            myMarker.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
         }
     }
 
     public void checkGPSEnabled() {
 
-        DialogFragment noGpsFragment = (DialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag(NoGpsFragment.TAG);
-        boolean isGpsEnabled = locationHelper.getLocationManager().isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean gpsDisabled = !locationHelper.getLocationManager().isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-        if (!isGpsEnabled && noGpsFragment == null)
-            new NoGpsFragment().show(getChildFragmentManager(),NoGpsFragment.TAG);
-        else if (!isGpsEnabled && !noGpsFragment.isVisible())
-            noGpsFragment.show(getChildFragmentManager(),NoGpsFragment.TAG);
+        if (gpsDisabled) {
+            new NoGpsFragment().show(getChildFragmentManager(), NoGpsFragment.TAG);
+        }
+
     }
-
-
 }
 

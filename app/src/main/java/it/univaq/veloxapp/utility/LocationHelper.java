@@ -32,8 +32,6 @@ public class LocationHelper {
 
     }
 
-
-
     public LocationManager getLocationManager() {
         return locationManager;
     }

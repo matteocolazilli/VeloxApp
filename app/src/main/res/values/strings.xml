@@ -8,4 +8,5 @@
     <string name="search_hint">Search by municipality</string>
     <string name="position_permissions_not_granted">Authorize us to use your location to find speed cameras near you</string>
     <string name="no_gps_alert_message">Your GPS seems to be disabled, do you want to enable it?</string>
+    <string name="downloading_data">Downloading data.. please wait</string>
 </resources>
