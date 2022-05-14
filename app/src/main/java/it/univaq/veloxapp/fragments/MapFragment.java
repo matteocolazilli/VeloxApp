@@ -31,6 +31,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import it.univaq.veloxapp.R;
 import it.univaq.veloxapp.database.DB;
@@ -46,17 +47,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private boolean firstUpdate = true;
     private Location myLocation = new Location("myposition");
 
-    private ActivityResultLauncher<String> locationPermissionLauncher = registerForActivityResult(
-            new ActivityResultContracts.RequestPermission(),
-            new ActivityResultCallback<Boolean>() {
+    private ActivityResultLauncher<String[]> locationPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestMultiplePermissions(),
+            new ActivityResultCallback<Map<String, Boolean>>() {
                 @Override
-                public void onActivityResult(Boolean result) {
-                    if (result) {
-                        locationHelper.start(MapFragment.this);
-                    } else {
-                        Toast.makeText(requireContext(), R.string.position_permissions_not_granted, Toast.LENGTH_SHORT).show();
-                        requireActivity().onBackPressed();
+                public void onActivityResult(Map<String, Boolean> result) {
+                    for (Map.Entry<String, Boolean> entry: result.entrySet()) {
+                        if (entry.getValue()) {
+                            locationHelper.start(MapFragment.this);
+                            return;
+                        }
                     }
+                    Toast.makeText(requireContext(), R.string.position_permissions_not_granted, Toast.LENGTH_SHORT).show();
+                    requireActivity().onBackPressed();
                 }
             });
 

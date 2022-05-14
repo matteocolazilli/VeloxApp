@@ -12,9 +12,9 @@ public class LocationHelper {
 
     private final Context context;
     private final LocationManager locationManager;
-    private final ActivityResultLauncher<String> locationPermissionLauncher;
+    private final ActivityResultLauncher<String[]> locationPermissionLauncher;
 
-    public LocationHelper(Context context, ActivityResultLauncher<String> locationPermissionLauncher) {
+    public LocationHelper(Context context, ActivityResultLauncher<String[]> locationPermissionLauncher) {
         this.context = context;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         this.locationPermissionLauncher = locationPermissionLauncher;
@@ -25,10 +25,15 @@ public class LocationHelper {
         int checkCoarse = ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION);
         int checkFine = ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
 
-        if (checkCoarse == PackageManager.PERMISSION_GRANTED && checkFine == PackageManager.PERMISSION_GRANTED) {
+        if (checkCoarse == PackageManager.PERMISSION_GRANTED && checkFine == PackageManager.PERMISSION_DENIED) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
+        } else if (checkFine == PackageManager.PERMISSION_GRANTED){
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
-        }else locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
+        }else locationPermissionLauncher.launch(new String[] {
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+        });
 
     }
 
