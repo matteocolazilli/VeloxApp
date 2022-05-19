@@ -83,7 +83,8 @@ public class ListFragment extends Fragment {
 
     private void download(){
 
-        new DialogProgress().show(getChildFragmentManager(),DialogProgress.TAG);
+        DialogProgress  dialogProgress = new DialogProgress();
+        dialogProgress.show(getChildFragmentManager(),DialogProgress.TAG);
         Request.asyncRequest(new OnRequestListener() {
 
 
@@ -108,11 +109,7 @@ public class ListFragment extends Fragment {
                 ListFragment.this.data.addAll(autoveloxList);
                 recyclerView.post(()-> {
                     FragmentManager fragmentManager = getChildFragmentManager();
-                    DialogProgress dialogProgress = (DialogProgress) fragmentManager.findFragmentByTag(NoGpsFragment.TAG);
-
-                    if (dialogProgress != null) {
-                        fragmentManager.beginTransaction().remove(dialogProgress);
-                    }//per togliere la finestra di dialogo dopo il caricamento dei dati
+                    fragmentManager.beginTransaction().remove(dialogProgress).commit();
                     adapter.notifyDataSetChanged(); // per eseguire la notifica dell'aggiornamento dati sul thread principale
                 });
 

@@ -101,7 +101,8 @@ public class Adapter extends  RecyclerView.Adapter<Adapter.ViewHolder> implement
         }
 
         @Override
-        public void onClick(View v) { //autovelox deve essere serializabile->dentro Autovelox implementa interfaccia serializeble
+        public void onClick(View v) {
+            //autovelox deve essere serializabile->dentro Autovelox implementa interfaccia serializeble
 
             Autovelox autovelox = autoveloxListFiltered.get(getAdapterPosition());
             Bundle bundle = new Bundle();
