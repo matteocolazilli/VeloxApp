@@ -22,7 +22,7 @@ import java.util.Locale;
 public class Autovelox implements Serializable {
 
 
-    public Autovelox() {};
+    public Autovelox() {}
 
     /*  {
             "ccomune":"Collegno",

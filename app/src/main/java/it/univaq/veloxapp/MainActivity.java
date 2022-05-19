@@ -19,7 +19,9 @@ public class MainActivity extends AppCompatActivity {
 
         NavHostFragment fragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragmentContainerView);
-        NavigationUI.setupWithNavController(bottomNavigationView, fragment.getNavController());
+        if (fragment != null) {
+            NavigationUI.setupWithNavController(bottomNavigationView, fragment.getNavController());
+        }
 
     }
 

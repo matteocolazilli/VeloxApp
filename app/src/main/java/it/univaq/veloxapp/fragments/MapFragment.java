@@ -15,7 +15,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
@@ -42,12 +41,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     private GoogleMap map;
     private Marker myMarker;
-    private List<Marker> autoveloxMarker = new ArrayList<>();
+    private final List<Marker> autoveloxMarker = new ArrayList<>();
     private LocationHelper locationHelper;
     private boolean firstUpdate = true;
-    private Location myLocation = new Location("myposition");
+    private final Location myLocation = new Location("myposition");
 
-    private ActivityResultLauncher<String[]> locationPermissionLauncher = registerForActivityResult(
+    private final ActivityResultLauncher<String[]> locationPermissionLauncher = registerForActivityResult(
             new ActivityResultContracts.RequestMultiplePermissions(),
             new ActivityResultCallback<Map<String, Boolean>>() {
                 @Override
@@ -189,7 +188,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 //aggiunta degli autovelox nel main thread
                 requireActivity().runOnUiThread(() -> {
                     Marker marker = map.addMarker(options);
-                    marker.setTag(autovelox); //per avere oggetto clickable
+                    if (marker != null) marker.setTag(autovelox); //per avere oggetto clickable
                     autoveloxMarker.add(marker);
                 });
 

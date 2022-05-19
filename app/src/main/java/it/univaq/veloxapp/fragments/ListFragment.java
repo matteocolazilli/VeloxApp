@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
@@ -28,9 +29,8 @@ import it.univaq.veloxapp.utility.Request;
 public class ListFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private List<Autovelox> data = new ArrayList<>();
-    private Adapter adapter = new Adapter(data);
-    private SearchView searchView;
+    private final List<Autovelox> data = new ArrayList<>();
+    private final Adapter adapter = new Adapter(data);
 
     @Nullable
     @Override
@@ -42,7 +42,7 @@ public class ListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        searchView = view.findViewById(R.id.search_bar);
+        SearchView searchView = view.findViewById(R.id.search_bar);
         searchView.setQueryHint(getString(R.string.search_hint));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -83,9 +83,7 @@ public class ListFragment extends Fragment {
 
     private void download(){
 
-        DialogProgress Dialog = new DialogProgress(getContext(), getActivity());
-        Dialog.showDialog();
-
+        new DialogProgress().show(getChildFragmentManager(),DialogProgress.TAG);
         Request.asyncRequest(new OnRequestListener() {
 
 
@@ -109,9 +107,12 @@ public class ListFragment extends Fragment {
 
                 ListFragment.this.data.addAll(autoveloxList);
                 recyclerView.post(()-> {
-                    if (Dialog != null){
-                        Dialog.dismissBar(); //per togliere la finestra di dialogo dopo il caricamento dei dati
-                    }
+                    FragmentManager fragmentManager = getChildFragmentManager();
+                    DialogProgress dialogProgress = (DialogProgress) fragmentManager.findFragmentByTag(NoGpsFragment.TAG);
+
+                    if (dialogProgress != null) {
+                        fragmentManager.beginTransaction().remove(dialogProgress);
+                    }//per togliere la finestra di dialogo dopo il caricamento dei dati
                     adapter.notifyDataSetChanged(); // per eseguire la notifica dell'aggiornamento dati sul thread principale
                 });
 

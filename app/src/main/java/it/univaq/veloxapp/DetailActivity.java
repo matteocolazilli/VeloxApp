@@ -26,7 +26,6 @@ import it.univaq.veloxapp.model.Autovelox;
 public class DetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private Autovelox autovelox;
-    private GoogleMap map;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +63,6 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        map = googleMap;
 
         Location l = new Location("autovelox");
         l.setLatitude(autovelox.getLatitude());
@@ -75,9 +73,11 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         markerOptions.position(new LatLng(l.getLatitude(), l.getLongitude()));
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
 
-        Marker marker = map.addMarker(markerOptions);
+        Marker marker = googleMap.addMarker(markerOptions);
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(),15 ));
+        if (marker != null) {
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(),15 ));
+        }
 
     }
 }
