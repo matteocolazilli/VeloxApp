@@ -79,6 +79,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         if (fragment != null) fragment.getMapAsync(this);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        locationHelper.start(this);
+    }
+
     @SuppressLint("NewApi")
     @Override
     public void onResume() {
@@ -88,7 +94,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
         if (noGpsFragment != null)
             fragmentManager.beginTransaction().remove(noGpsFragment).commit();
-        locationHelper.start(this);
+
         checkGPSEnabled();
 
     }
@@ -139,9 +145,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         FragmentManager fragmentManager = getChildFragmentManager();
         NoGpsFragment noGpsFragment = (NoGpsFragment) fragmentManager.findFragmentByTag(NoGpsFragment.TAG);
 
+
         if (provider.equals(LocationManager.GPS_PROVIDER) && noGpsFragment == null)
             checkGPSEnabled();
-            locationHelper.start(this);
+
     }
 
     @Override
@@ -150,10 +157,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         FragmentManager fragmentManager = getChildFragmentManager();
         NoGpsFragment noGpsFragment = (NoGpsFragment) fragmentManager.findFragmentByTag(NoGpsFragment.TAG);
 
-        if (noGpsFragment != null)
+        if (provider.equals(LocationManager.GPS_PROVIDER) && noGpsFragment != null)
             fragmentManager.beginTransaction().remove(noGpsFragment).commit();
 
-        locationHelper.start(this);
     }
 
     private void load(Location location) {
