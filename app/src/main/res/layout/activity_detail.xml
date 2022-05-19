@@ -29,24 +29,32 @@
             android:id="@+id/textMunicipality"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             tools:text="TextView" />
 
         <TextView
             android:id="@+id/textProvince"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             tools:text="TextView" />
 
         <TextView
             android:id="@+id/textRegion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             tools:text="TextView" />
 
         <TextView
             android:id="@+id/textInsertionData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             tools:text="TextView" />
 
         <androidx.fragment.app.FragmentContainerView

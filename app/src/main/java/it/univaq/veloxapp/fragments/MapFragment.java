@@ -139,7 +139,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         FragmentManager fragmentManager = getChildFragmentManager();
         NoGpsFragment noGpsFragment = (NoGpsFragment) fragmentManager.findFragmentByTag(NoGpsFragment.TAG);
 
-        if (provider.equals(LocationManager.GPS_PROVIDER) && noGpsFragment == null) checkGPSEnabled();
+        if (provider.equals(LocationManager.GPS_PROVIDER) && noGpsFragment == null)
+            checkGPSEnabled();
+            locationHelper.start(this);
     }
 
     @Override

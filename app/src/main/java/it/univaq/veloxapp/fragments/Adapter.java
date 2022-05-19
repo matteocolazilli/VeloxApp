@@ -90,8 +90,9 @@ public class Adapter extends  RecyclerView.Adapter<Adapter.ViewHolder> implement
         }
 
         public void onBind(Autovelox autovelox) {
+            String address = (autovelox.getAddress()).split(",")[0];
+            title.setText(address);
 
-            title.setText(autovelox.getAddress());
             String info = String.format("%s (%s), %s",
                     autovelox.getMunicipality(),
                     autovelox.getProvince(),
