@@ -2,17 +2,10 @@ package it.univaq.veloxapp.fragments;
 
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.os.Bundle;
-
 import android.app.AlertDialog;
+import android.content.Context;
 import android.view.LayoutInflater;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import it.univaq.veloxapp.R;
